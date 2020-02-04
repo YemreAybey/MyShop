@@ -5,24 +5,26 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   email: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
+  resetToken: String,
+  resetTokenExpiration: Date,
   cart: {
     items: [
       {
         productId: {
           type: Schema.Types.ObjectId,
           ref: 'Product',
-          required: true,
+          required: true
         },
-        quantity: { type: Number, required: true },
-      },
-    ],
-  },
+        quantity: { type: Number, required: true }
+      }
+    ]
+  }
 });
 
 userSchema.methods.addToCart = function(product) {
@@ -38,11 +40,11 @@ userSchema.methods.addToCart = function(product) {
   } else {
     updatedCartItems.push({
       productId: product._id,
-      quantity: newQuantity,
+      quantity: newQuantity
     });
   }
   const updatedCart = {
-    items: updatedCartItems,
+    items: updatedCartItems
   };
   this.cart = updatedCart;
   return this.save();
